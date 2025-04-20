@@ -1,23 +1,18 @@
 import streamlit as st
-from utils import load_pdf_text, get_qa_chain
-from dotenv import load_dotenv
+from utils import get_answer
 
-load_dotenv()
+st.set_page_config(page_title="College Notes Chatbot", layout="wide")
+st.title("📚 College Notes Chatbot")
 
-st.set_page_config(page_title="College Notes Chatbot")
-st.title("📘 College Notes AI Chatbot")
-st.write("Ask anything from your uploaded college notes!")
+st.markdown("Ask any question from your college notes 👇")
 
-pdf_file = st.file_uploader("Upload PDF Notes", type="pdf")
+query = st.text_input("Enter your question")
 
-if pdf_file:
-    with st.spinner("Reading PDF..."):
-        raw_text = load_pdf_text(pdf_file)
-        chain = get_qa_chain(raw_text)
-    
-    query = st.text_input("Ask a question based on your notes:")
-    
+if st.button("Ask"):
     if query:
-        with st.spinner("Thinking..."):
-            result = chain.run(query)
-            st.success(result)
+        with st.spinner("Searching for answer..."):
+            answer = get_answer(query)
+            st.success(answer)
+    else:
+        st.warning("Please enter a question.")
+
