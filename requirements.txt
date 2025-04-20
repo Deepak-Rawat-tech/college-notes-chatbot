@@ -1,5 +1,5 @@
 streamlit
-python-dotenv
-PyPDF2
-openai
-langchain
+pandas
+sentence-transformers
+torch
+
