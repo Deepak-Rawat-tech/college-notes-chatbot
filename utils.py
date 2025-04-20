@@ -1,18 +1,24 @@
-import PyPDF2
-from langchain.llms import OpenAI
-from langchain.chains.question_answering import load_qa_chain
-from langchain.text_splitter import CharacterTextSplitter
-from langchain.docstore.document import Document
+import pandas as pd
+from sentence_transformers import SentenceTransformer, util
 
-def load_pdf_text(pdf_file):
-    reader = PyPDF2.PdfReader(pdf_file)
-    text = ""
-    for page in reader.pages:
-        text += page.extract_text()
-    return text
+# Load model only once
+model = SentenceTransformer('all-MiniLM-L6-v2')
 
-def get_qa_chain(text):
-    chunks = CharacterTextSplitter(chunk_size=1000, chunk_overlap=200).split_text(text)
-    docs = [Document(page_content=c) for c in chunks]
-    chain = load_qa_chain(OpenAI(temperature=0), chain_type="stuff")
-    return lambda q: chain.run(input_documents=docs, question=q)
+# Load the CSV with Q&A
+df = pd.read_csv("formatted_qa.csv")
+
+# Precompute embeddings of all questions
+df['embedding'] = df['Question'].apply(lambda x: model.encode(x, convert_to_tensor=True))
+
+def get_answer(query):
+    query_embedding = model.encode(query, convert_to_tensor=True)
+    
+    # Compute cosine similarities
+    similarities = df['embedding'].apply(lambda x: float(util.cos_sim(x, query_embedding)))
+    
+    # Get best match
+    best_idx = similarities.idxmax()
+    best_question = df.iloc[best_idx]['Question']
+    best_answer = df.iloc[best_idx]['Answer']
+    
+    return f"**Answer:** {best_answer}\n\n_(Matched with: '{best_question}')_"
