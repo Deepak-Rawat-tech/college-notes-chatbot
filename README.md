@@ -49,7 +49,7 @@ The chatbot extracts content from lecture notes in PDF format and generates a CS
 
 ## 🖼️ Screenshot
 
-> _(You can insert a screenshot of your chatbot interface or CSV file here)_
+![Image](https://github.com/user-attachments/assets/99f287d6-44f2-4e4d-8c83-e6ce634e1199)
 
 ---
 
