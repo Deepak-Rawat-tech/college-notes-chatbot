@@ -55,5 +55,11 @@ The chatbot extracts content from lecture notes in PDF format and generates a CS
 ---
 
 ## 📁 Folder Structure
+📁 pdf-to-notes-chatbot
+├── chatbot.py
+├── text_extractor.py
+├── formatted_qa.csv
+├── UNIT 1 notes.pdf.pdf
+└── README.md
 
 
