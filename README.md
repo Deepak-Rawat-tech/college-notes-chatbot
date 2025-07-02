@@ -50,6 +50,7 @@ The chatbot extracts content from lecture notes in PDF format and generates a CS
 ## 🖼️ Screenshot
 
 ![Image](https://github.com/user-attachments/assets/99f287d6-44f2-4e4d-8c83-e6ce634e1199)
+![Image](https://github.com/user-attachments/assets/07f88610-0a69-481c-a326-ca26e1b91f7c)
 
 ---
 
